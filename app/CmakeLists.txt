@@ -1,0 +1,28 @@
+cmake_minimum_required (VERSION 3.15)
+
+set(CMAKE_CXX_STANDARD 17)
+
+aux_source_directory(. SRC)
+
+include_directories(
+SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../third_parties/glfw/include
+SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../third_parties/glm/include
+SYSTEM D:/Vulkan/include
+)
+
+link_directories(
+SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../third_parties/glfw/lib
+SYSTEM D:/Vulkan/Lib
+)
+
+add_subdirectory(vulkan_wrapper)
+add_subdirectory(texture)
+
+add_executable(app ${SRC})
+
+target_link_libraries(
+	app vulkanLib textureLib vulkan-1.lib glfw3.lib
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
